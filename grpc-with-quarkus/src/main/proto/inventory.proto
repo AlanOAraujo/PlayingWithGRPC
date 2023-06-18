@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.encoded";
+
+package br.com.encoded;
+
+service InventoryService {
+    rpc CreateInventory (CreateInventoryRequest) returns (InventoryResponse) {}
+    rpc UpdateInventory (UpdateInventoryRequest) returns (InventoryResponse) {}
+    rpc FindByInventoryId (RequestById) returns (InventoryResponse) {}
+    rpc FindInventoryByProductId (InventoryByProductId) returns (ListInventoryResponse) {}
+    rpc FindAllInventoryList (EmptyRequest) returns (ListInventoryResponse) {}
+}
+
+message ListInventoryResponse {
+    repeated InventoryResponse inventories = 1;
+}
+
+message EmptyRequest {}
+
+message RequestById{
+    int64 id = 1;
+}
+
+message CreateInventoryRequest {
+    int64 productId = 2;
+    int64 quantity = 3;
+    double cost = 4;
+}
+
+message UpdateInventoryRequest {
+    int64 inventoryId = 1;
+    int64 productId = 2;
+    int64 quantity = 3;
+    double cost = 4;
+    string createDate = 5;
+    string uptadeDate = 6;
+}
+
+message InventoryResponse {
+    int64 inventoryId = 1;
+    int64 productId = 2;
+    int64 quantity = 3;
+    double cost = 4;
+    string createDate = 5;
+    string uptadeDate = 6;
+}
+
+message InventoryByProductId{
+    int64 id = 1;
+}

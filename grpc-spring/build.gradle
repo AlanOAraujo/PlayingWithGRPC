@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.0'
+	id 'io.spring.dependency-management' version '1.1.0'
+	id "com.google.protobuf" version "0.9.3"
+}
+
+group = 'br.com.encode'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'io.github.lognet:grpc-spring-boot-starter:5.1.2'
+	implementation 'io.grpc:grpc-stub:1.55.1'
+	implementation 'io.grpc:grpc-protobuf:1.55.1'
+	implementation 'io.grpc:grpc-netty-shaded:1.55.1'
+	runtimeOnly 'io.grpc:grpc-services:1.55.1'
+	implementation 'io.netty:netty-tcnative-boringssl-static:2.0.61.Final'
+
+	implementation 'javax.annotation:javax.annotation-api:1.3.2'
+	testImplementation 'org.assertj:assertj-core:3.24.2'
+	testImplementation 'org.flywaydb:flyway-core:9.19.1'
+
+	implementation 'org.postgresql:postgresql'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	testImplementation 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+protobuf {
+	protoc {
+		artifact = "com.google.protobuf:protoc:3.21.7"
+	}
+	plugins {
+		grpc {
+			artifact = 'io.grpc:protoc-gen-grpc-java:1.55.1'
+		}
+	}
+	generateProtoTasks {
+		all()*.plugins {
+			grpc {}
+		}
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs("build/generated/source/proto/main/grpc")
+			srcDirs("build/generated/source/proto/main/java")
+		}
+	}
+}
