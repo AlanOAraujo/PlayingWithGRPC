@@ -6,6 +6,7 @@ import br.com.encode.ProductResponse;
 import br.com.encode.ProductResponseList;
 import br.com.encode.ProductServiceGrpc;
 import br.com.encode.RequestById;
+import br.com.encode.UpdateProductRequest;
 import br.com.encode.domain.dto.ProductInputDTO;
 import br.com.encode.domain.dto.ProductOutputDTO;
 import br.com.encode.service.ProductService;
@@ -44,6 +45,23 @@ public class ProductController extends ProductServiceGrpc.ProductServiceImplBase
 
         ProductResponse productResponse = ProductResponse.newBuilder()
                 .setId(outputDTO.getId()).
+                setName(outputDTO.getName()).
+                setPrice(outputDTO.getPrice()).
+                setQuantityInStock(outputDTO.getQuantityInStock()).build();
+
+        responseObserver.onNext(productResponse);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void update(UpdateProductRequest request, StreamObserver<ProductResponse> responseObserver) {
+
+        ProductInputDTO inputDTO = new ProductInputDTO(request.getId(), request.getName(),
+                request.getPrice(), request.getQuantityInStock());
+
+        ProductOutputDTO outputDTO = service.updateProduct(inputDTO);
+
+        ProductResponse productResponse = ProductResponse.newBuilder().setId(outputDTO.getId()).
                 setName(outputDTO.getName()).
                 setPrice(outputDTO.getPrice()).
                 setQuantityInStock(outputDTO.getQuantityInStock()).build();

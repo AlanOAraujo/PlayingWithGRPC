@@ -63,7 +63,7 @@ public class InventoryGrpcService extends InventoryServiceGrpc.InventoryServiceI
                 .setQuantity(outputRecord.quantity())
                 .setCost(outputRecord.cost())
                 .setCreateDate(outputRecord.createDate())
-                .setUptadeDate(outputRecord.updateDate())
+                .setUpdateDate(outputRecord.updateDate())
                 .build();
 
         responseObserver.onNext(response);
@@ -82,7 +82,7 @@ public class InventoryGrpcService extends InventoryServiceGrpc.InventoryServiceI
                     .setQuantity(outputRecord.quantity())
                     .setCost(outputRecord.cost())
                     .setCreateDate(outputRecord.createDate())
-                    .setUptadeDate(outputRecord.updateDate())
+                    .setUpdateDate(outputRecord.updateDate())
                     .build();
 
             responseObserver.onNext(inventoryResponse);
@@ -107,7 +107,7 @@ public class InventoryGrpcService extends InventoryServiceGrpc.InventoryServiceI
                                 .setQuantity(outputRecord.quantity())
                                 .setCost(outputRecord.cost())
                                 .setCreateDate(outputRecord.createDate())
-                                .setUptadeDate(outputRecord.updateDate())
+                                .setUpdateDate(outputRecord.updateDate())
                                 .build()).toList());
 
         responseObserver.onNext(listInventoryResponse.build());
@@ -128,7 +128,7 @@ public class InventoryGrpcService extends InventoryServiceGrpc.InventoryServiceI
                                 .setQuantity(outputRecord.quantity())
                                 .setCost(outputRecord.cost())
                                 .setCreateDate(outputRecord.createDate())
-                                .setUptadeDate(outputRecord.updateDate())
+                                .setUpdateDate(outputRecord.updateDate())
                                 .build()).toList());
 
         responseObserver.onNext(listInventoryResponse.build());

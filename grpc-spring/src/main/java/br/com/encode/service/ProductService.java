@@ -10,5 +10,6 @@ public interface ProductService {
     ProductOutputDTO createProduct(ProductInputDTO inputDTO);
     ProductOutputDTO findProductById(Long id);
     void deleteProduct(Long id);
+    ProductOutputDTO updateProduct(ProductInputDTO inputDTO);
     List<ProductOutputDTO> findAllProduct();
 }

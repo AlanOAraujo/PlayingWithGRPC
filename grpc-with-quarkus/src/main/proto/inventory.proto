@@ -35,7 +35,6 @@ message UpdateInventoryRequest {
     int64 quantity = 3;
     double cost = 4;
     string createDate = 5;
-    string uptadeDate = 6;
 }
 
 message InventoryResponse {
@@ -44,7 +43,7 @@ message InventoryResponse {
     int64 quantity = 3;
     double cost = 4;
     string createDate = 5;
-    string uptadeDate = 6;
+    string updateDate = 6;
 }
 
 message InventoryByProductId{

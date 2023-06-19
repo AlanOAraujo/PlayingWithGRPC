@@ -18,6 +18,7 @@ public class InventoryRepository implements PanacheRepository<Inventory> {
         return inventory;
     }
 
+    @Transactional
     public Inventory updateInventory(Inventory inventory) {
 
         update("cost = ?1, quantity = ?2, updateDate = ?3 where id = ?4",

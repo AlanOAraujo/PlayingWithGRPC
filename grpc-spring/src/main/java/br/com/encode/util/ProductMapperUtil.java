@@ -6,7 +6,7 @@ import br.com.encode.domain.dto.ProductOutputDTO;
 
 import java.util.List;
 
-public class ProductConverterUtil {
+public class ProductMapperUtil {
 
     public static ProductOutputDTO productToProductOutputDto(Product product){
 
@@ -18,7 +18,7 @@ public class ProductConverterUtil {
 
     }
 
-    public static Product productInputDtoToProduct(ProductInputDTO product){
+    public static Product createProductInputDtoToProduct(ProductInputDTO product){
 
         return new Product(
                 null,
@@ -28,10 +28,20 @@ public class ProductConverterUtil {
 
     }
 
+    public static Product updateProductInputDtoToProduct(ProductInputDTO product){
+
+        return new Product(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getQuantityInStock());
+
+    }
+
     public static List<ProductOutputDTO> productListToProductOutputDtoList(List<Product> products) {
 
         return products.stream()
-            .map(ProductConverterUtil::productToProductOutputDto)
+            .map(ProductMapperUtil::productToProductOutputDto)
             .toList();
 
     }
