@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class InventoryRepository implements PanacheRepository<Inventory> {
@@ -30,8 +31,8 @@ public class InventoryRepository implements PanacheRepository<Inventory> {
         return inventory;
     }
 
-    public Inventory findByInventoryId(Long id) {
-        return findById(id);
+    public Optional<Inventory> findByInventoryId(Long id) {
+        return Optional.ofNullable(findById(id));
     }
 
     public List<Inventory> findByProductId(Long productId) {

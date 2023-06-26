@@ -6,6 +6,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class InventoryUseCase {
@@ -21,7 +22,8 @@ public class InventoryUseCase {
         return inventoryRepository.updateInventory(inventory);
     }
 
-    public Inventory findById(Long id) {
+    public Optional<Inventory> findById(Long id) {
+
         return inventoryRepository.findByInventoryId(id);
     }
 

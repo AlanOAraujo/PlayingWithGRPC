@@ -1,10 +1,10 @@
 package br.com.encode.controller;
 
-import br.com.encode.EmptyRequest;
 import br.com.encode.ProductRequest;
 import br.com.encode.ProductResponse;
 import br.com.encode.ProductResponseList;
 import br.com.encode.RequestById;
+import br.com.encode.UpdateProductRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -51,5 +51,19 @@ public class ProductControllerTest {
 
         assertThat(responseList.getProductsCount()).isEqualTo(2);
         assertThat(responseList).isInstanceOf(ProductResponseList.class);
+    }
+
+    @Test
+    void updateSuccess() {
+        UpdateProductRequest request = UpdateProductRequest.newBuilder()
+                .setId(1L)
+                .setName("Product 1")
+                .setPrice(10.0)
+                .setQuantityInStock(10).build();
+
+        assertThat(request.getId()).isEqualTo(1L);
+        assertThat(request.getName()).isEqualTo("Product 1");
+        assertThat(request.getPrice()).isEqualTo(10.0);
+        assertThat(request.getQuantityInStock()).isEqualTo(10);
     }
 }

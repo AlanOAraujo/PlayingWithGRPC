@@ -127,4 +127,25 @@ public class ProductServerImplTest {
                 .isEqualTo(java.util.List.of(product));
     }
 
+    @Test
+    public void updateProductSuccessTest() {
+        Product product = new Product(1L, "productName", 10.00, 10);
+
+        Mockito.when(productRepository
+                .findById(Mockito.any()))
+                .thenReturn(Optional.of(product));
+
+        Mockito.when(productRepository
+                .save(Mockito.any()))
+                .thenReturn(product);
+
+        ProductInputDTO inputDTO = new ProductInputDTO("productName", 10.00, 10);
+
+        ProductOutputDTO outputDTO = productService.updateProduct(inputDTO);
+
+        Assertions.assertThat(outputDTO)
+                .usingRecursiveComparison()
+                .isEqualTo(product);
+    }
+
 }

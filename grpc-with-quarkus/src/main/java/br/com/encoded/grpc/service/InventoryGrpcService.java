@@ -10,6 +10,7 @@ import br.com.encoded.RequestById;
 import br.com.encoded.UpdateInventoryRequest;
 import br.com.encoded.domain.dto.input.InventoryInputRecord;
 import br.com.encoded.domain.dto.output.InventoryOutputRecord;
+import br.com.encoded.domain.entity.Inventory;
 import br.com.encoded.usecase.InventoryUseCase;
 import io.grpc.stub.StreamObserver;
 import io.quarkus.grpc.GrpcService;
@@ -17,6 +18,7 @@ import io.smallrye.common.annotation.Blocking;
 import jakarta.inject.Inject;
 
 import java.util.List;
+import java.util.Optional;
 
 @Blocking
 @GrpcService
@@ -72,24 +74,23 @@ public class InventoryGrpcService extends InventoryServiceGrpc.InventoryServiceI
 
     @Override
     public void findByInventoryId(RequestById request, StreamObserver<InventoryResponse> responseObserver) {
-        try {
-            InventoryOutputRecord outputRecord = InventoryOutputRecord.inventoryToInventoryOutput(
-                    inventoryUseCase.findById(request.getId()));
 
-            InventoryResponse inventoryResponse = InventoryResponse.newBuilder()
-                    .setInventoryId(outputRecord.id())
-                    .setProductId(outputRecord.productId())
-                    .setQuantity(outputRecord.quantity())
-                    .setCost(outputRecord.cost())
-                    .setCreateDate(outputRecord.createDate())
-                    .setUpdateDate(outputRecord.updateDate())
-                    .build();
+        responseObserver.onNext(
+                inventoryUseCase.findById(request.getId())
+                        .map(InventoryOutputRecord::inventoryToInventoryOutput)
+                        .map(outputRecord -> InventoryResponse.newBuilder()
+                                .setInventoryId(outputRecord.id())
+                                .setProductId(outputRecord.productId())
+                                .setQuantity(outputRecord.quantity())
+                                .setCost(outputRecord.cost())
+                                .setCreateDate(outputRecord.createDate())
+                                .setUpdateDate(outputRecord.updateDate())
+                                .build())
+                        .orElse(InventoryResponse.newBuilder().build())
+        );
 
-            responseObserver.onNext(inventoryResponse);
-            responseObserver.onCompleted();
-        } catch (RuntimeException ie) {
-            responseObserver.onError(ie.getCause());
-        }
+        responseObserver.onCompleted();
+
     }
 
     @Override
